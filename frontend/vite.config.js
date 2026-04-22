@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/predict': 'http://localhost:5000',
-      '/static':  'http://localhost:5000',
-      '/status':  'http://localhost:5000',
+      '/predict': 'http://127.0.0.1:5001',
+      '/static':  'http://127.0.0.1:5001',
+      '/status':  'http://127.0.0.1:5001',
     },
   },
 })

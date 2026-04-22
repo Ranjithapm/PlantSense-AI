@@ -28,11 +28,13 @@ export default function UploadSection({ onResults }) {
     try {
       const fd = new FormData();
       fd.append('file', file);
-      const { data } = await axios.post('/predict', fd);
+      const API_URL = import.meta.env.VITE_API_URL || '';
+      const { data } = await axios.post(`${API_URL}/predict`, fd);
       if (!data.success) throw new Error(data.error || 'Prediction failed');
       onResults(data);
     } catch (err) {
-      alert('Error: ' + err.message);
+      const errorMsg = err.response?.data?.error || err.message;
+      alert('Error: ' + errorMsg);
     } finally {
       setLoading(false);
     }

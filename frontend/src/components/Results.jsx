@@ -88,7 +88,7 @@ export default function Results({ data, onReset }) {
           {/* Analysed Image */}
           <div className="result-block glass-card">
             <h3 className="block-title">📸 Analysed Image</h3>
-            <img src={data.image_url} alt="Analysed leaf" className="result-img" />
+            <img src={`${import.meta.env.VITE_API_URL || ''}${data.image_url}`} alt="Analysed leaf" className="result-img" />
           </div>
 
           {/* Primary Prediction */}
