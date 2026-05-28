@@ -1,70 +1,107 @@
-# PlantSense-AI
 
-PlantSense-AI is a real-time agricultural intelligence system that integrates Deep Learning Classification with Visible-Range Multispectral Image Analysis to identify and diagnose crop leaf diseases.
+# PlantSense-AI 🌿
 
-Developed under your research paper "Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis", it stands out from other classifiers by combining neural network diagnostics with deterministic botanical indicators and safety filters.
+PlantSense-AI is a real-time agricultural intelligence system that uses Deep Learning and Visible-Range Multispectral Image Analysis to detect plant leaf diseases.
 
-🚀 Key Technical Features
-Intelligent Foliage Check (HSV Masking)
+Developed under the research paper **“Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis”**, the system combines CNN-based disease prediction with vegetation index analysis for accurate and reliable crop monitoring.
 
-How it works: When a user uploads an image, the backend converts it to the HSV color space and isolates green hues (Hue: 35–85, Saturation/Value filters).
-Why it's unique: It checks the greenness pixel ratio. If the image has less than 6% green pixels, the server rejects it. This acts as a robust filter against background noise, accidental uploads, and non-plant pictures.
-Visible-Light Pseudo-Multispectral Telemetry
+## 🚀 Features
 
-Computes vegetation indices straight from standard RGB camera uploads to provide objective health metrics alongside the "black-box" CNN predictions:
-Excess Green (ExG): 2G−R−B — Measures crop canopy density and green vigor.
-Excess Red (ExR): 1.4R−G — Highlights necrotic (dead/decayed) spots or dry tissue.
-Visible Atmospherically Resistant Index (VARI):  
-G+R−B
-G−R
-​
-  — Normalizes ambient daylight and atmospheric fluctuations for reliable field photography.
-Overall Greenness Percentage: Reflects chlorophyll levels.
-Fine-Tuned MobileNetV2 Neural Network
+* Real-time plant disease detection using leaf images
+* Intelligent foliage validation using HSV masking
+* MobileNetV2-based deep learning classifier
+* Visible-light vegetation analysis using:
 
-Transfer Learning: Adapts the pre-trained ImageNet MobileNetV2 model to agricultural specifics.
-Two-Phase Training Strategy (train_model.py):
-Phase 1 (Feature Extraction): Freezes the base layers and trains the custom classification head (pooling, Dense 256, Dropout 50%, Softmax) for 5 epochs using a learning rate of 10 
-−3
- .
-Phase 2 (Fine-Tuning): Unfreezes the top 30 base layers and trains the network at a micro-learning rate of 10 
-−4
-  using dynamic callbacks like ReduceLROnPlateau and EarlyStopping to avoid overfitting.
-Actionable Remediation Engine
+  * Excess Green (ExG)
+  * Excess Red (ExR)
+  * VARI
+  * Greenness Percentage
+* Actionable treatment recommendations
+* Responsive React frontend with Flask backend
 
-Evaluates diagnostic states and returns targeted organic, physical, or chemical treatment plans for immediate crop care.
-Premium Full-Stack Architecture
+## 🧠 Deep Learning Model
 
-Frontend: Built with React 19, Vite, and Axios. Features a responsive floating-node canvas particle system (BgParticles.jsx), glassmorphic layouts, live drag-and-drop uploads, and rich progress indicators.
-Backend: A Flask REST API (app.py) running on port 5001 that processes files, runs computer vision checks, and runs model predictions.
-📂 Directory Architecture
-A complete breakdown of your project's structure has been structured in the README, including:
+The system uses a fine-tuned **MobileNetV2** model with transfer learning.
 
-Core Logic: app.py, train_model.py, class_indices.json
-Automated Scripts: INSTALL_DEPENDENCIES.bat, START_PROJECT.bat (Windows master launchers)
-Design Components: frontend/src/components/ (results visualizers, upload widgets, active canvas particles)
-Model Storage: model/ directory for the plant_model.h5 weights.
-📋 Supported Crop Directory (15-Class Palette)
-Supports Tomato, Potato, and Pepper crops, covering:
+### Training Strategy
 
-Pepper: Bacterial Spot, Healthy
-Potato: Early Blight, Late Blight, Healthy
-Tomato: Bacterial Spot, Early Blight, Late Blight, Leaf Mold, Septoria Leaf Spot, Spider Mites (Two-Spotted Spider Mite), Target Spot, Yellow Leaf Curl Virus, Mosaic Virus, Healthy
-🛠️ Quick Installation and Setup Instructions
-Automated (Windows):
-Double-click INSTALL_DEPENDENCIES.bat to automatically download Python requirements and setup React libraries.
-Double-click START_PROJECT.bat to simultaneously run the Flask Server (http://localhost:5001) and the Vite React server (http://localhost:3000).
-Manual Setup (Cross-Platform):
-Backend: pip install -r requirements.txt followed by python app.py
-Frontend: cd frontend, npm install, then npm run dev
-📝 Academic Attribution
-Your authors and department details have been fully integrated into the citations:
+* **Phase 1:** Feature extraction with frozen base layers
+* **Phase 2:** Fine-tuning top layers using low learning rate and callbacks such as:
 
-Paper Title: Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis
-Authors: Ranjitha Prabha P & Monisha J R
-Institution: Department of Computer Science and Engineering, St. Joseph’s Institute of Technology, Chennai, India
-What I Have Done:
-Created and wrote a comprehensive, professionally styled, and technical markdown document to your 
-README.md
-.
-Verified that it captures all specific equations (ExG, ExR, VARI), setup scripts, model architectures (two-phase MobileNetV2), folder layouts, and academic credits.
+  * EarlyStopping
+  * ReduceLROnPlateau
+
+## 🌱 Supported Crops & Diseases
+
+### Pepper
+
+* Bacterial Spot
+* Healthy
+
+### Potato
+
+* Early Blight
+* Late Blight
+* Healthy
+
+### Tomato
+
+* Bacterial Spot
+* Early Blight
+* Late Blight
+* Leaf Mold
+* Septoria Leaf Spot
+* Spider Mites
+* Target Spot
+* Yellow Leaf Curl Virus
+* Mosaic Virus
+* Healthy
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React 19
+* Vite
+* Axios
+
+### Backend
+
+* Flask REST API
+* TensorFlow / Keras
+
+## 📂 Project Structure
+
+* `app.py` – Backend API
+* `train_model.py` – Model training
+* `frontend/` – React frontend
+* `model/` – Trained model weights
+* `class_indices.json` – Class mappings
+
+## ▶️ Setup Instructions
+
+### Backend
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## 📄 Research Details
+
+**Paper Title:** Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis
+
+**Author:**
+Ranjitha Prabha P
+
+**Institution:**
+Department of Computer Science and Engineering
+St. Joseph’s Institute of Technology, Chennai, India
