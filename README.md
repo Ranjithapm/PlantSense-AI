@@ -1,87 +1,70 @@
 # PlantSense-AI
 
+PlantSense-AI is a real-time agricultural intelligence system that integrates Deep Learning Classification with Visible-Range Multispectral Image Analysis to identify and diagnose crop leaf diseases.
 
-# AI-Powered Grievance Redressal Portal 🏛️🤖
+Developed under your research paper "Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis", it stands out from other classifiers by combining neural network diagnostics with deterministic botanical indicators and safety filters.
 
-An intelligent, full-stack, omnichannel grievance management system designed to streamline the process of filing, categorizing, routing, and resolving citizen complaints. This platform leverages modern web technologies and advanced Artificial Intelligence (NLP, Computer Vision, and Speech-to-Text) to automate workflows and ensure timely resolution.
+🚀 Key Technical Features
+Intelligent Foliage Check (HSV Masking)
 
-## 🌟 Key Features
+How it works: When a user uploads an image, the backend converts it to the HSV color space and isolates green hues (Hue: 35–85, Saturation/Value filters).
+Why it's unique: It checks the greenness pixel ratio. If the image has less than 6% green pixels, the server rejects it. This acts as a robust filter against background noise, accidental uploads, and non-plant pictures.
+Visible-Light Pseudo-Multispectral Telemetry
 
-*   **Omnichannel Intake:** Citizens can file grievances via web forms, document uploads, or voice notes.
-*   **Regional Language Support:** Built-in support for Tamil voice complaints using **AssemblyAI** for Speech-to-Text and **Google Translate API** for English translation.
-*   **AI-Powered Categorization & Routing:** Automatically classifies the grievance category (e.g., Water, Roads, Sanitation) and routes it to the correct department using **Google Gemini AI**.
-*   **Intelligent Entity Extraction:** Uses a local Python **SpaCy NER** (Named Entity Recognition) model to extract crucial details like location, jurisdiction, and area from complaint text.
-*   **Document & Image Processing:** Extracts text from uploaded documents using **Tesseract.js (OCR)** and utilizes **YOLOv8** for image-based problem detection (e.g., identifying potholes or garbage dumps).
-*   **Role-Based Access Control (RBAC):** Dedicated dashboards and interfaces for Citizens, Authorities/Officers, and System Admins.
-*   **Automated SLA Tracking:** Automatically assigns Service Level Agreement (SLA) deadlines (e.g., 21 days) and tracks the status lifecycle from "Registered" to "Closed".
-*   **Analytics & Dashboard:** Interactive visual dashboards for authorities and admins to monitor grievance trends, resolution rates, and pending tasks.
+Computes vegetation indices straight from standard RGB camera uploads to provide objective health metrics alongside the "black-box" CNN predictions:
+Excess Green (ExG): 2G−R−B — Measures crop canopy density and green vigor.
+Excess Red (ExR): 1.4R−G — Highlights necrotic (dead/decayed) spots or dry tissue.
+Visible Atmospherically Resistant Index (VARI):  
+G+R−B
+G−R
+​
+  — Normalizes ambient daylight and atmospheric fluctuations for reliable field photography.
+Overall Greenness Percentage: Reflects chlorophyll levels.
+Fine-Tuned MobileNetV2 Neural Network
 
----
+Transfer Learning: Adapts the pre-trained ImageNet MobileNetV2 model to agricultural specifics.
+Two-Phase Training Strategy (train_model.py):
+Phase 1 (Feature Extraction): Freezes the base layers and trains the custom classification head (pooling, Dense 256, Dropout 50%, Softmax) for 5 epochs using a learning rate of 10 
+−3
+ .
+Phase 2 (Fine-Tuning): Unfreezes the top 30 base layers and trains the network at a micro-learning rate of 10 
+−4
+  using dynamic callbacks like ReduceLROnPlateau and EarlyStopping to avoid overfitting.
+Actionable Remediation Engine
 
-## 💻 Tech Stack
+Evaluates diagnostic states and returns targeted organic, physical, or chemical treatment plans for immediate crop care.
+Premium Full-Stack Architecture
 
-### Frontend
-*   **React.js** (Bootstrapped with Vite for fast builds)
-*   **React Router DOM** (Client-side routing)
-*   **Chart.js / react-chartjs-2** (Interactive data visualization and analytics)
-*   **Axios** (API requests)
-*   **Lucide React** (Modern iconography)
+Frontend: Built with React 19, Vite, and Axios. Features a responsive floating-node canvas particle system (BgParticles.jsx), glassmorphic layouts, live drag-and-drop uploads, and rich progress indicators.
+Backend: A Flask REST API (app.py) running on port 5001 that processes files, runs computer vision checks, and runs model predictions.
+📂 Directory Architecture
+A complete breakdown of your project's structure has been structured in the README, including:
 
-### Backend
-*   **Node.js & Express.js** (RESTful API architecture)
-*   **MongoDB & Mongoose** (NoSQL Database for flexible schema management)
-*   **JWT & Bcrypt** (Secure authentication and password hashing)
-*   **Multer** (Handling file and audio uploads)
+Core Logic: app.py, train_model.py, class_indices.json
+Automated Scripts: INSTALL_DEPENDENCIES.bat, START_PROJECT.bat (Windows master launchers)
+Design Components: frontend/src/components/ (results visualizers, upload widgets, active canvas particles)
+Model Storage: model/ directory for the plant_model.h5 weights.
+📋 Supported Crop Directory (15-Class Palette)
+Supports Tomato, Potato, and Pepper crops, covering:
 
-### Artificial Intelligence & Machine Learning
-*   **Google Gemini API:** Core LLM for intelligent text processing and decision-making.
-*   **AssemblyAI:** Highly accurate Speech-to-Text engine for processing voice notes.
-*   **Google Translate API:** For breaking language barriers (Tamil to English).
-*   **Python & SpaCy:** Local Machine Learning scripts for Custom Named Entity Recognition (NER).
-*   **Tesseract.js:** Optical Character Recognition (OCR) to read text from citizen-uploaded images/documents.
-*   **YOLOv8 (PyTorch):** Computer vision model for object detection in uploaded evidence photos.
+Pepper: Bacterial Spot, Healthy
+Potato: Early Blight, Late Blight, Healthy
+Tomato: Bacterial Spot, Early Blight, Late Blight, Leaf Mold, Septoria Leaf Spot, Spider Mites (Two-Spotted Spider Mite), Target Spot, Yellow Leaf Curl Virus, Mosaic Virus, Healthy
+🛠️ Quick Installation and Setup Instructions
+Automated (Windows):
+Double-click INSTALL_DEPENDENCIES.bat to automatically download Python requirements and setup React libraries.
+Double-click START_PROJECT.bat to simultaneously run the Flask Server (http://localhost:5001) and the Vite React server (http://localhost:3000).
+Manual Setup (Cross-Platform):
+Backend: pip install -r requirements.txt followed by python app.py
+Frontend: cd frontend, npm install, then npm run dev
+📝 Academic Attribution
+Your authors and department details have been fully integrated into the citations:
 
----
-
-## 🏗️ Project Architecture
-
-1.  **Client Tier:** React frontend interacts with the citizen or officer.
-2.  **API Gateway:** Express.js handles incoming HTTP requests, file uploads, and authentication.
-3.  **AI Processing Pipeline:** 
-    *   *Voice Input* -> AssemblyAI -> Google Translate -> NLP processing.
-    *   *Image Input* -> YOLOv8 / Tesseract.js -> Context extraction.
-    *   *Text Input* -> Spacy NER & Gemini -> Classification & Routing.
-4.  **Data Tier:** MongoDB stores User profiles, Grievance tickets, Audit logs, and Action Taken Reports (ATRs).
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-*   Node.js (v18+)
-*   Python 3.8+ (for SpaCy NER and YOLOv8 models)
-*   MongoDB (Local or Atlas)
-*   API Keys needed: Google Gemini, AssemblyAI, Google Translate.
-
-### Installation
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/yourusername/AI_GrievancePortal.git
-cd AI_GrievancePortal
-
-**2. Setup Backend**
-cd backend
-npm install
-# Create a .env file based on .env.example and add your API keys/Database URI
-npm run dev
-
-**3. Setup Frontend**
-cd ../frontend
-npm install
-npm run dev
-
-**4. Setup Local Python AI Models**
-Ensure Python is installed and install the required ML packages:
-pip install spacy ultralytics
-python -m spacy download en_core_web_sm
+Paper Title: Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis
+Authors: Ranjitha Prabha P & Monisha J R
+Institution: Department of Computer Science and Engineering, St. Joseph’s Institute of Technology, Chennai, India
+What I Have Done:
+Created and wrote a comprehensive, professionally styled, and technical markdown document to your 
+README.md
+.
+Verified that it captures all specific equations (ExG, ExR, VARI), setup scripts, model architectures (two-phase MobileNetV2), folder layouts, and academic credits.
