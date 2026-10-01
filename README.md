@@ -1,37 +1,49 @@
-
 # PlantSense-AI 🌿
 
-PlantSense-AI is a real-time agricultural intelligence system that uses Deep Learning and Visible-Range Multispectral Image Analysis to detect plant leaf diseases.
+PlantSense-AI is an AI-powered agricultural intelligence system designed for **early plant stress and disease detection using leaf image analysis**.
 
-Developed under the research paper **“Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis”**, the system combines CNN-based disease prediction with vegetation index analysis for accurate and reliable crop monitoring.
+The system combines **deep learning-based disease classification** with **visible-light vegetation index analysis** to provide useful insights into plant health and support early crop monitoring.
 
 ## 🚀 Features
 
-* Real-time plant disease detection using leaf images
-* Intelligent foliage validation using HSV masking
-* MobileNetV2-based deep learning classifier
-* Visible-light vegetation analysis using:
+* 🌱 Real-time plant leaf disease detection
+* 🔍 Leaf and foliage validation using HSV-based image processing
+* 🧠 MobileNetV2-based deep learning classification
+* 📊 Vegetation analysis using:
 
   * Excess Green (ExG)
   * Excess Red (ExR)
-  * VARI
+  * Visible Atmospherically Resistant Index (VARI)
   * Greenness Percentage
-* Actionable treatment recommendations
-* Responsive React frontend with Flask backend
+* 💡 Plant health insights and treatment recommendations
+* 🖥️ Responsive React frontend
+* ⚙️ Flask REST API backend
 
 ## 🧠 Deep Learning Model
 
-The system uses a fine-tuned **MobileNetV2** model with transfer learning.
+PlantSense-AI uses **MobileNetV2 with transfer learning** for plant disease classification.
 
-### Training Strategy
+### Training Approach
 
-* **Phase 1:** Feature extraction with frozen base layers
-* **Phase 2:** Fine-tuning top layers using low learning rate and callbacks such as:
+The model is trained in two stages:
 
-  * EarlyStopping
-  * ReduceLROnPlateau
+1. **Feature Extraction**
 
-## 🌱 Supported Crops & Diseases
+   * The base MobileNetV2 layers are frozen.
+   * The newly added classification layers are trained.
+
+2. **Fine-Tuning**
+
+   * Selected layers of the pretrained model are unfrozen.
+   * The model is fine-tuned using a low learning rate.
+   * Training uses callbacks such as:
+
+     * EarlyStopping
+     * ReduceLROnPlateau
+
+## 🌱 Supported Crops
+
+The current model supports the following crops:
 
 ### Pepper
 
@@ -57,7 +69,22 @@ The system uses a fine-tuned **MobileNetV2** model with transfer learning.
 * Mosaic Virus
 * Healthy
 
-## 🛠️ Tech Stack
+## 📊 Image Analysis
+
+In addition to disease classification, PlantSense-AI analyzes visible characteristics of plant leaves using image-processing techniques.
+
+The system calculates vegetation indices such as:
+
+| Index       | Purpose                                            |
+| ----------- | -------------------------------------------------- |
+| ExG         | Estimates green vegetation intensity               |
+| ExR         | Measures red-channel dominance                     |
+| VARI        | Estimates vegetation from visible RGB information  |
+| Greenness % | Provides an approximate measure of green leaf area |
+
+These measurements can complement the deep learning prediction and provide additional information about plant condition.
+
+## 🛠️ Technology Stack
 
 ### Frontend
 
@@ -67,41 +94,93 @@ The system uses a fine-tuned **MobileNetV2** model with transfer learning.
 
 ### Backend
 
-* Flask REST API
-* TensorFlow / Keras
+* Python
+* Flask
+* TensorFlow
+* Keras
+* OpenCV
+
+### Machine Learning
+
+* MobileNetV2
+* Transfer Learning
+* Image Preprocessing
+* Vegetation Index Analysis
 
 ## 📂 Project Structure
 
-* `app.py` – Backend API
-* `train_model.py` – Model training
-* `frontend/` – React frontend
-* `model/` – Trained model weights
-* `class_indices.json` – Class mappings
+```text
+PlantSense-AI/
+│
+├── app.py
+├── train_model.py
+├── requirements.txt
+├── class_indices.json
+│
+├── model/
+│   └── trained model files
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+└── README.md
+```
 
 ## ▶️ Setup Instructions
 
-### Backend
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Ranjithapm/PlantSense-AI.git
+cd PlantSense-AI
+```
+
+### 2. Install Backend Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+### 3. Start the Flask Backend
+
+```bash
 python app.py
 ```
 
-### Frontend
+### 4. Install Frontend Dependencies
+
+Open another terminal:
 
 ```bash
 cd frontend
 npm install
+```
+
+### 5. Start the React Frontend
+
+```bash
 npm run dev
 ```
 
-## 📄 Research Details
+The frontend can then be accessed through the local URL provided by Vite.
 
-**Paper Title:** Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis
+## 🔬 Research Details
+
+**Paper Title:**
+Deep Learning-Based Plant Stress Detection Using Leaf Image Analysis
 
 **Author:**
 Ranjitha Prabha P
 
 **Institution:**
 Department of Computer Science and Engineering
-St. Joseph’s Institute of Technology, Chennai, India
+St. Joseph’s Institute of Technology
+Chennai, India
+
+## 🎯 Objective
+
+The primary objective of PlantSense-AI is to combine **deep learning and image-based vegetation analysis** to support early identification of plant diseases and stress conditions.
+
+The system is intended to provide a simple and accessible approach for analyzing plant health using leaf images.
